@@ -7,26 +7,26 @@ module.exports = {
 
     await queryInterface.bulkInsert("ProductPhotos", [
       {
-        product_id: 12,
-        image_path: "uploads/products/beepollen.png",
+        productId: 1,
+        imagePath: "uploads/products/beepollen.png",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        product_id: 13,
-        image_path: "uploads/products/madhoney.jpg",
+        productId: 2,
+        imagePath: "uploads/products/madhoney.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        product_id: 14,
-        image_path: "uploads/products/chillypickle.jpg",
+        productId: 3,
+        imagePath: "uploads/products/chillypickle.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        product_id: 15,
-        image_path: "uploads/products/shilajit.jpg",
+        productId: 3,
+        imagePath: "uploads/products/shilajit.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },

@@ -9,22 +9,22 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      customer_name: {
+      customerName: {
         type: Sequelize.STRING
       },
-      customer_phone: {
+      customerPhone: {
         type: Sequelize.STRING
       },
-      customer_email: {
+      customerEmail: {
         type: Sequelize.STRING
       },
-      customer_address: {
+      customerAddress: {
         type: Sequelize.TEXT
       },
-      total_price: {
+      totalPrice: {
         type: Sequelize.DECIMAL
       },
-      order_status: {
+      orderStatus: {
         type: Sequelize.STRING
       },
       createdAt: {

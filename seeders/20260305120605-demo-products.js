@@ -8,8 +8,8 @@ module.exports = {
 
     await queryInterface.bulkInsert("Products", [
       {
-        category_id: 1,
-        product_name: "Bee Pollen",
+        categoryID: 1,
+        productName: "Bee Pollen",
         quantity: 100,
         price: 2500,
         description: "High-quality bee pollen collected from local flowers.",
@@ -17,8 +17,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        category_id: 1,
-        product_name: "Mad Honey",
+        categoryID: 1,
+        productName: "Mad Honey",
         quantity: 150,
         price: 1200,
         description:
@@ -27,8 +27,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        category_id: 4,
-        product_name: "chilly Pickle",
+        categoryID: 4,
+        productName: "chilly Pickle",
         quantity: 200,
         price: 1200,
         description: "Spicy chilly pickle made from organic ingredients.",
@@ -36,8 +36,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        category_id: 2,
-        product_name: "Shilajit",
+        categoryID: 2,
+        productName: "Shilajit",
         quantity: 200,
         price: 1200,
         description: "Pure shilajit resin sourced from the mountains of Nepal, known for its health benefits.",
@@ -45,8 +45,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        category_id: 1,
-        product_name: "Bee Pollen",
+        categoryID: 1,
+        productName: "Bee Pollen",
         quantity: 100,
         price: 2500,
         description: "High-quality bee pollen collected from local flowers.",
@@ -54,8 +54,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        category_id: 1,
-        product_name: "Mad Honey",
+        categoryID: 1,
+        productName: "Mad Honey",
         quantity: 150,
         price: 1200,
         description:
@@ -64,8 +64,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        category_id: 4,
-        product_name: "chilly Pickle",
+        categoryID: 4,
+        productName: "chilly Pickle",
         quantity: 200,
         price: 1200,
         description: "Spicy chilly pickle made from organic ingredients.",
@@ -73,8 +73,8 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        category_id: 2,
-        product_name: "Shilajit",
+        categoryID: 2,
+        productName: "Shilajit",
         quantity: 200,
         price: 1200,
         description: "Pure shilajit resin sourced from the mountains of Nepal, known for its health benefits.",

@@ -9,13 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      order_id: {
+      orderId: {
         type: Sequelize.INTEGER
       },
-      product_id: {
+      productId: {
         type: Sequelize.INTEGER
       },
-      product_name: {
+      productName: {
         type: Sequelize.STRING
       },
       price: {
@@ -24,7 +24,7 @@ module.exports = {
       quantity: {
         type: Sequelize.INTEGER
       },
-      total_price: {
+      totalPrice: {
         type: Sequelize.DECIMAL
       },
       createdAt: {

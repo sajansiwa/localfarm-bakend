@@ -8,22 +8,22 @@ module.exports = {
 
     await queryInterface.bulkInsert("ProductCategories", [
       {
-        category_name: "Honey",
+        categoryName: "Honey",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        category_name: "Shilajit",
+        categoryName: "Shilajit",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        category_name: "Tea",
+        categoryName: "Tea",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        category_name: "Pickles",
+        categoryName: "Pickles",
         createdAt: new Date(),
         updatedAt: new Date(),
       },

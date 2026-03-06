@@ -9,16 +9,20 @@ const options = {
       version: "1.0.0",
       description: "API documentation for Admin routes",
     },
-    // tags: [
-    //   {
-    //     name: "Website",
-    //     description: "Website related APIs",
-    //   },
-    //   {
-    //     name: "Admin",
-    //     description: "Coffee Beans App",
-    //   },
-    // ],
+    tags: [
+      {
+        name: "Website",
+        description: "Website related APIs",
+      },
+      {
+        name: "Admin",
+        description: "Coffee Beans App",
+      },
+      {
+        name: "Products",
+        description: "Product management APIs"
+      }
+    ],
     servers: [
       {
         url: "http://localhost:5000",
