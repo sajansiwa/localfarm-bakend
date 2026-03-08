@@ -11,16 +11,16 @@ const options = {
     },
     tags: [
       {
-        name: "Website",
-        description: "Website related APIs",
-      },
-      {
         name: "Admin",
-        description: "Coffee Beans App",
+        description: "Admin related APIs",
       },
       {
         name: "Products",
         description: "Product management APIs"
+      },
+      {
+        name: "Blogs",
+        description: "Blog management APIs"
       }
     ],
     servers: [
