@@ -9,15 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       ProductPhoto.belongsTo(models.Product, {
-        foreignKey: "product_id",
+        foreignKey: "productId",
         as: "product",
       });
     }
   }
   ProductPhoto.init(
     {
-      product_id: DataTypes.INTEGER,
-      image_path: DataTypes.STRING,
+      productId: DataTypes.INTEGER,
+      imagePath: DataTypes.STRING,
     },
     {
       sequelize,

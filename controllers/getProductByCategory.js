@@ -4,6 +4,9 @@ const getProductsByCategory = async (req, res) => {
   try {
     const products = await db.Product.findAll({
       where: { categoryId: req.params.categoryId },
+      include: [
+        { model: db.ProductPhoto, as: "photos", attributes: ["imagePath"] },
+      ],
     });
     products.length > 0
       ? res.json(products)

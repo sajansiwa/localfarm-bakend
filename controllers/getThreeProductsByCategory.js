@@ -5,6 +5,9 @@ const getthreeProductsByCategory = async (req, res) => {
     const products = await db.Product.findAll({
       where: { categoryId: req.params.categoryId },
       limit: 3,
+      include: [
+        { model: db.ProductPhoto, as: "photos", attributes: ["imagePath"] },
+      ],
     });
     products.length > 0
       ? res.json(products)

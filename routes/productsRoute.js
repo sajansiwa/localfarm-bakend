@@ -6,6 +6,7 @@ const getThreeProducts = require("../controllers/getThreeProducts");
 const getProductById = require("../controllers/getProductById");
 const getProductsByCategory = require("../controllers/getProductByCategory");
 const getThreeProductsByCategory = require("../controllers/getThreeProductsByCategory");
+const upload = require("../middlewares/upload");
 
 /**
  * @swagger
@@ -115,6 +116,96 @@ router.get("/api/products/category/:categoryId", getProductsByCategory);
 router.get(
   "/api/products/category/three/:categoryId",
   getThreeProductsByCategory,
+);
+
+/**
+ * @swagger
+ * /api/products:
+ *   post:
+ *     summary: Create a new product
+ *     description: Add a new product with category and upload multiple product photos
+ *     tags:
+ *       - Products
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - categoryId
+ *               - productName
+ *               - price
+ *             properties:
+ *               categoryId:
+ *                 type: integer
+ *                 example: 1
+ *               productName:
+ *                 type: string
+ *                 example: Bee Pollen
+ *               quantity:
+ *                 type: integer
+ *                 example: 20
+ *               price:
+ *                 type: number
+ *                 format: float
+ *                 example: 15.5
+ *               description:
+ *                 type: string
+ *                 example: Organic timur achhar from local farm
+ *               photos:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *     responses:
+ *       201:
+ *         description: Product created successfully
+ *       400:
+ *         description: Invalid input
+ *       500:
+ *         description: Server error
+ */
+router.post(
+  "/api/products",
+  upload.array("photos", 5), // max 5 images
+  async (req, res) => {
+    try {
+      const { categoryId, productName, quantity, price, description } =
+        req.body;
+
+      // 1️⃣ Create product
+      const product = await db.Product.create({
+        categoryId,
+        productName,
+        quantity,
+        price,
+        description,
+      });
+
+      // 2️⃣ Save photos
+      if (req.files && req.files.length > 0) {
+        const photos = req.files.map((file) => ({
+          productId: product.id,
+          image_path: "uploads/products/" + file.filename,
+        }));
+
+        await db.ProductPhoto.bulkCreate(photos);
+      }
+
+      const productWithPhotos = await db.Product.findByPk(product.id, {
+        include: [{ model: db.ProductPhoto, as: "photos" }],
+      });
+
+      res.status(201).json({
+        message: "Product created successfully",
+        product: productWithPhotos,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error creating product" });
+    }
+  },
 );
 
 module.exports = router;

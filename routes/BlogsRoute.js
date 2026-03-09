@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../models");
 const getLatestBlogs = require("../controllers/getLatestBlogs");
 const getProductByCategory = require("../controllers/getBlogsByCategory");
 

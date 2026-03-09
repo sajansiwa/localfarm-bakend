@@ -4,10 +4,12 @@ const testRoutes = require("./routes/testRoute");
 const productRoutes = require("./routes/productsRoute");
 const blogRoutes = require("./routes/BlogsRoute");
 const path = require("path");
+const cors = require('cors')
 
 const { swaggerUi, swaggerSpec } = require("./swagger");
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 

@@ -2,7 +2,11 @@ const db = require("../models");
 
 const getAllProductsById = async (req, res) => {
   try {
-    const product = await db.Product.findByPk(req.params.id);
+    const product = await db.Product.findByPk(req.params.id, {
+      include: [
+        { model: db.ProductPhoto, as: "photos", attributes: ["imagePath"] },
+      ],
+    });
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });

@@ -9,23 +9,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Product.belongsTo(models.ProductCategory, {
-        foreignKey: "categoryID",
+        foreignKey: "categoryId",
         as: "category",
       });
 
       Product.hasMany(models.ProductPhoto, {
-        foreignKey: "productID",
+        foreignKey: "productId",
         as: "photos",
       });
 
       Product.hasMany(models.OrderDetail, {
-        foreignKey: "productID",
+        foreignKey: "productId",
       });
     }
   }
   Product.init(
     {
-      categoryID: { type: DataTypes.INTEGER, allowNull: false },
+      categoryId: { type: DataTypes.INTEGER, allowNull: false },
       productName: DataTypes.STRING,
       quantity: DataTypes.INTEGER,
       price: DataTypes.DECIMAL,
