@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const getLatestBlogs = require("../controllers/getLatestBlogs");
+const getProductByCategory = require("../controllers/getBlogsByCategory");
 
 /**
  * @swagger
@@ -16,28 +18,7 @@ const db = require("../models");
  *       500:
  *         description: Server error
  */
-router.get("/api/blogslp", async (req, res) => {
-  try {
-    const blogs = await db.Blog.findAll({
-      limit: 5,
-      order: [["createdAt", "DESC"]],
-      attributes: ["id", "title", "slug", "introduction", "createdAt"],
-      include: [
-        {
-          model: db.BlogImage,
-          as: "photos",
-          attributes: ["imagePath"],
-          limit: 1,
-        },
-      ],
-    });
-    // console.log(blogs);
-    res.json(blogs);
-  } catch (err) {
-    console.error("Error fetching blogs:", err);
-    res.status(500).json({ error: "An error occurred while fetching blogs." });
-  }
-});
+router.get("/api/blogslp", getLatestBlogs);
 
 /**
  * @swagger
@@ -61,27 +42,6 @@ router.get("/api/blogslp", async (req, res) => {
  *       404:
  *         description: Blog not found
  */
-router.get("/api/blogs/:slug", async (req, res) => {
-  try {
-    const blog = await db.Blog.findOne({
-      where: { slug: req.params.slug },
-      include: [
-        {
-          model: db.BlogImage,
-          as: "photos",
-          attributes: ["imagePath"],
-        },
-      ],
-    });
-
-    if (!blog) {
-      return res.status(404).json({ message: "Blog not found" });
-    }
-
-    res.json(blog);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching blog" });
-  }
-});
+router.get("/api/blogs/:slug", getProductByCategory);
 
 module.exports = router;

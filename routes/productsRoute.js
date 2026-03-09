@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const getAllProducts = require("../controllers/getAllProducts");
+const getThreeProducts = require("../controllers/getThreeProducts");
+const getProductById = require("../controllers/getProductById");
+const getProductsByCategory = require("../controllers/getProductByCategory");
+const getThreeProductsByCategory = require("../controllers/getThreeProductsByCategory");
 
 /**
  * @swagger
@@ -16,22 +21,7 @@ const db = require("../models");
  *       500:
  *         description: Server error
  */
-router.get("/api/products", async (req, res) => {
-  try {
-    const products = await db.Product.findAll( {
-        include: [
-            {model: db.ProductPhoto, as: "photos", attributes: ["imagePath"]},
-        ]
-    });
-    // console.log(products);
-    res.json(products);
-  } catch (err) {
-    // console.error("Error fetching products:", err);
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching products." });
-  }
-});
+router.get("/api/products", getAllProducts);
 
 /**
  * @swagger
@@ -47,20 +37,7 @@ router.get("/api/products", async (req, res) => {
  *       500:
  *         description: server error
  */
-router.get("/api/products/three", async (req, res) => {
-  try {
-    const products = await db.Product.findAll({
-      limit: 3,
-    });
-    // console.log(products);
-    res.json(products);
-  } catch (err) {
-    // console.error("Error fetching products:", err);
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching products." });
-  }
-});
+router.get("/api/products/three", getThreeProducts);
 
 /**
  * @swagger
@@ -85,19 +62,7 @@ router.get("/api/products/three", async (req, res) => {
  *       500:
  *         description: Server error
  */
-router.get("/api/products/:id", async (req, res) => {
-  try {
-    const product = await db.Product.findByPk(req.params.id);
-
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+router.get("/api/products/:id", getProductById);
 
 /**
  * @swagger
@@ -122,21 +87,7 @@ router.get("/api/products/:id", async (req, res) => {
  *       500:
  *         description: Server error
  */
-router.get("/api/products/category/:categoryId", async (req, res) => {
-  try {
-    const products = await db.Product.findAll({
-      where: { categoryId: req.params.categoryId },
-    });
-    products.length > 0
-      ? res.json(products)
-      : res
-          .status(404)
-          .json({ message: "No products found for this category" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
+router.get("/api/products/category/:categoryId", getProductsByCategory);
 
 /**
  * @swagger
@@ -161,20 +112,9 @@ router.get("/api/products/category/:categoryId", async (req, res) => {
  *       500:
  *         description: Server error
  */
-router.get("/api/products/category/three/:categoryId", async (req, res) => {
-  try {
-    const products = await db.Product.findAll({
-      where: { categoryId: req.params.categoryId },
-      limit: 3,
-    });
-    products.length > 0
-      ? res.json(products)
-      : res
-          .status(404)
-          .json({ message: "No products found for this category" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+router.get(
+  "/api/products/category/three/:categoryId",
+  getThreeProductsByCategory,
+);
 
 module.exports = router;
