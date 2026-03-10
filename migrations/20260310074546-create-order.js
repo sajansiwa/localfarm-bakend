@@ -19,10 +19,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       customerAddress: {
-        type: Sequelize.TEXT
+        type: Sequelize.STRING
       },
       totalPrice: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.STRING
       },
       orderStatus: {
         type: Sequelize.STRING
@@ -41,3 +41,4 @@ module.exports = {
     await queryInterface.dropTable('Orders');
   }
 };
+

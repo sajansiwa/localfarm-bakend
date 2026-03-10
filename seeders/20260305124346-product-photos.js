@@ -14,19 +14,19 @@ module.exports = {
       },
       {
         productId: 2,
-        imagePath: "uploads/products/madhoney.jpg",
+        imagePath: "uploads/products/madhoney.png",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         productId: 3,
-        imagePath: "uploads/products/chillypickle.jpg",
+        imagePath: "uploads/products/chillypickle.png",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         productId: 3,
-        imagePath: "uploads/products/shilajit.jpg",
+        imagePath: "uploads/products/shilajit.png",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
