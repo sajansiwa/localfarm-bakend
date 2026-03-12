@@ -21,6 +21,10 @@ const options = {
       {
         name: "Blogs",
         description: "Blog management APIs"
+      },
+      {
+        name: "Orders",
+        description: "Order management APIs"
       }
     ],
     servers: [

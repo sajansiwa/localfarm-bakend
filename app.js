@@ -3,6 +3,7 @@ const adminRoutes = require("./routes/adminRoute");
 const testRoutes = require("./routes/testRoute");
 const productRoutes = require("./routes/productsRoute");
 const blogRoutes = require("./routes/BlogsRoute");
+const orderRoutes = require("./routes/ordersRoute");
 const path = require("path");
 const cors = require('cors')
 
@@ -23,6 +24,7 @@ app.use(adminRoutes);
 app.use(testRoutes);
 app.use(productRoutes);
 app.use(blogRoutes);
+app.use(orderRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World");
