@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const orderController = require("../controllers/createOrder");
+const getOrderController = require("../controllers/getOrder");
+const getOrdersByIdController = require("../controllers/getOrdersById");
 
 
 /**
  * @swagger
- * /orders:
+ * /api/orders:
  *   post:
  *     summary: Create a new order
  *     description: Creates an order along with multiple order items.
@@ -82,6 +84,48 @@ const orderController = require("../controllers/createOrder");
  *       500:
  *         description: Failed to create order
  */
-router.post("/orders", orderController.createOrder);
+router.post("/api/orders", orderController.createOrder);
+
+
+/**
+ * @swagger
+ * /api/orders:
+ *   get:
+ *     summary: Get all orders
+ *     description: Retrieve a list of all orders
+ *     tags:
+ *       - Orders
+ *     responses:
+ *       200:
+ *         description: List of orders
+ *       500:
+ *         description: Server error
+ */
+router.get("/api/orders", getOrderController.getAllOrders);
+
+/**
+ * @swagger
+ * /api/orders/{id}:
+ *   get:
+ *     summary: Get order by ID
+ *     description: Retrieve a specific order by its ID
+ *     tags:
+ *       - Orders
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Order ID
+ *     responses:
+ *       200:
+ *         description: Order found
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Server error
+ */
+router.get("/api/orders/:id", getOrdersByIdController.getAllOrdersById);
 
 module.exports = router;
