@@ -20,13 +20,13 @@ module.exports = {
       },
       {
         productId: 3,
-        imagePath: "uploads/products/chillypickle.png",
+        imagePath: "uploads/products/pickle.png",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        productId: 3,
-        imagePath: "uploads/products/shilajit.png",
+        productId: 4,
+        imagePath: "uploads/products/silajit.png",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
