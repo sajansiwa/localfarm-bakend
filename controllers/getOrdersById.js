@@ -11,11 +11,8 @@ exports.getAllOrdersById = async (req, res) => {
       ],
     });
 
-    console.log(orders);
-
     res.status(200).json(orders);
   } catch (error) {
-    console.error(error);
     res.status(500).json({
       message: "Failed to retrieve orders",
       error: error.message,

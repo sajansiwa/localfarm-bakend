@@ -4,6 +4,7 @@ const testRoutes = require("./routes/testRoute");
 const productRoutes = require("./routes/productsRoute");
 const blogRoutes = require("./routes/BlogsRoute");
 const orderRoutes = require("./routes/ordersRoute");
+const eventRoutes = require("./routes/eventRoute");
 const path = require("path");
 const cors = require('cors')
 
@@ -25,6 +26,7 @@ app.use(testRoutes);
 app.use(productRoutes);
 app.use(blogRoutes);
 app.use(orderRoutes);
+app.use(eventRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello World");

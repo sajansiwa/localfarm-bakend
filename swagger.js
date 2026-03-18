@@ -16,16 +16,20 @@ const options = {
       },
       {
         name: "Products",
-        description: "Product management APIs"
+        description: "Product management APIs",
       },
       {
         name: "Blogs",
-        description: "Blog management APIs"
+        description: "Blog management APIs",
       },
       {
         name: "Orders",
-        description: "Order management APIs"
-      }
+        description: "Order management APIs",
+      },
+      {
+        name: "Events",
+        description: "Event management APIs",
+      },
     ],
     servers: [
       {
