@@ -260,55 +260,64 @@ router.post(
  *       500:
  *         description: Server error
  */
-router.put("/api/products/:id", upload.array("photos", 5), async (req, res) => {
-  try {
-    const { categoryId, productName, quantity, price, description } = req.body;
+router.put(
+  "/api/products/:id",
+  (req, res, next) => {
+    req.uploadFolder = "uploads/products/";
+    next();
+  },
+  upload.array("photos", 5),
+  async (req, res) => {
+    try {
+      const { categoryId, productName, quantity, price, description } =
+        req.body;
 
-    const productId = req.params.id;
+      const productId = req.params.id;
 
-    // check if product exists
-    const product = await db.Product.findByPk(productId);
+      // check if product exists
+      const product = await db.Product.findByPk(productId);
 
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
 
-    // update product
-    await product.update({
-      categoryId,
-      productName,
-      quantity,
-      price,
-      description,
-    });
-
-    // if new photos uploaded
-    if (req.files && req.files.length > 0) {
-      // delete old photos
-      await db.ProductPhoto.destroy({
-        where: { productId: productId },
+      // update product
+      await product.update({
+        categoryId,
+        productName,
+        quantity,
+        price,
+        description,
       });
 
-      const photos = req.files.map((file) => ({
-        productId: productId,
-        image_path: "uploads/products/" + file.filename,
-      }));
+      // if new photos uploaded
+      if (req.files && req.files.length > 0) {
+        // delete old photos
+        await db.ProductPhoto.destroy({
+          where: { productId: productId },
+        });
 
-      await db.ProductPhoto.bulkCreate(photos);
+        const photos = req.files.map((file) => ({
+          productId: productId,
+          image_path: "uploads/products/" + file.filename,
+        }));
+
+        await db.ProductPhoto.bulkCreate(photos);
+      }
+
+      const updatedProduct = await db.Product.findByPk(productId, {
+        include: [{ model: db.ProductPhoto, as: "photos" }],
+      });
+
+      res.status(200).json({
+        message: "Product updated successfully",
+        product: updatedProduct,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error updating product" });
     }
-
-    const updatedProduct = await db.Product.findByPk(productId, {
-      include: [{ model: db.ProductPhoto, as: "photos" }],
-    });
-
-    res.status(200).json({
-      message: "Product updated successfully",
-      product: updatedProduct,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error updating product" });
-  }
-});
+  },
+);
 
 module.exports = router;

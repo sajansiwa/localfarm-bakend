@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const getLatestBlogs = require("../controllers/getLatestBlogs");
 const getProductByCategory = require("../controllers/getBlogsByCategory");
+const getAllBlogs = require("../controllers/getAllBlogs");
+const updateBlogs = require("../controllers/updateBlog");
+const upload = require("../middlewares/upload");
 
 /**
  * @swagger
@@ -18,6 +21,78 @@ const getProductByCategory = require("../controllers/getBlogsByCategory");
  *         description: Server error
  */
 router.get("/api/blogslp", getLatestBlogs);
+
+/**
+ * @swagger
+ * /api/blogs:
+ *   get:
+ *     summary: Get all blogs for the blogs page
+ *     description: Retrieve a list of all blogs
+ *     tags:
+ *       - Blogs
+ *     responses:
+ *       200:
+ *         description: List of blogs
+ *       500:
+ *         description: Server error
+ */
+router.get("/api/blogs", getAllBlogs);
+
+/**
+ * @swagger
+ * /api/blogs/{id}:
+ *   put:
+ *     summary: Update a blog by ID
+ *     description: Updates blog details and images using form-data.
+ *     tags:
+ *       - Blogs
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: Why mad honey is Healthy
+ *               slug:
+ *                 type: string
+ *                 example: mad-honey-benefits
+ *               introduction:
+ *                 type: string
+ *                 example: Bee pollen is a natural substance collected by bees from flowers. It is rich in nutrients and has been used for centuries for its health benefits. In this blog, we will explore the various benefits of bee pollen and why it is considered a superfood.
+ *               content:
+ *                 type: string
+ *                 example: Bee pollen is packed with vitamins, minerals, proteins, lipids, and antioxidants. It has been shown to boost the immune system, improve digestion, and reduce inflammation. Additionally, bee pollen may help with allergies by acting as a natural antihistamine. It can also enhance athletic performance and promote skin health. Overall, incorporating bee pollen into your diet can provide numerous health benefits.
+ *               photos:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *     responses:
+ *       200:
+ *         description: Blog updated successfully
+ *       404:
+ *         description: Blog not found
+ *       500:
+ *         description: Server error
+ */
+router.put(
+  "/api/blogs/:id",
+  (req, res, next) => {
+    req.uploadFolder = "uploads/blogImages/";
+    next();
+  },
+  upload.array("photos"),
+  updateBlogs,
+);
 
 /**
  * @swagger
