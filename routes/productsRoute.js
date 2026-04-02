@@ -227,7 +227,7 @@ router.post(
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -268,6 +268,7 @@ router.put(
   },
   upload.array("photos", 5),
   async (req, res) => {
+    const transaction = await db.sequelize.transaction();
     try {
       const { categoryId, productName, quantity, price, description } =
         req.body;
@@ -282,38 +283,47 @@ router.put(
       }
 
       // update product
-      await product.update({
-        categoryId,
-        productName,
-        quantity,
-        price,
-        description,
-      });
+      await product.update(
+        {
+          categoryId,
+          productName,
+          quantity,
+          price,
+          description,
+        },
+        { transaction },
+      );
 
       // if new photos uploaded
       if (req.files && req.files.length > 0) {
         // delete old photos
         await db.ProductPhoto.destroy({
           where: { productId: productId },
+          transaction,
         });
 
         const photos = req.files.map((file) => ({
           productId: productId,
-          image_path: "uploads/products/" + file.filename,
+          imagePath: "uploads/products/" + file.filename,
         }));
 
-        await db.ProductPhoto.bulkCreate(photos);
+        const createdPhotos = await db.ProductPhoto.bulkCreate(photos, {
+          transaction,
+        });
       }
 
       const updatedProduct = await db.Product.findByPk(productId, {
         include: [{ model: db.ProductPhoto, as: "photos" }],
       });
 
+      await transaction.commit();
+
       res.status(200).json({
         message: "Product updated successfully",
         product: updatedProduct,
       });
     } catch (error) {
+      await transaction.rollback();
       console.error(error);
       res.status(500).json({ error: "Error updating product" });
     }

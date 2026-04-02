@@ -3,7 +3,7 @@ const router = express.Router();
 const orderController = require("../controllers/createOrder");
 const getOrderController = require("../controllers/getOrder");
 const getOrdersByIdController = require("../controllers/getOrdersById");
-
+const updateOrderController = require("../controllers/updateOrder");
 
 /**
  * @swagger
@@ -86,6 +86,93 @@ const getOrdersByIdController = require("../controllers/getOrdersById");
  */
 router.post("/api/orders", orderController.createOrder);
 
+/**
+ * @swagger
+ * /api/orders/{id}:
+ *   put:
+ *     summary: Update an existing order
+ *     description: Updates order details along with its items. Existing items are deleted and replaced with new ones.
+ *     tags:
+ *       - Orders
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Order ID
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - customerName
+ *               - customerPhone
+ *               - customerAddress
+ *               - items
+ *             properties:
+ *               customerName:
+ *                 type: string
+ *                 example: John Doe
+ *               customerPhone:
+ *                 type: string
+ *                 example: 9800000000
+ *               customerEmail:
+ *                 type: string
+ *                 example: john@example.com
+ *               customerAddress:
+ *                 type: string
+ *                 example: Kathmandu
+ *               status:
+ *                 type: string
+ *                 example: pending
+ *               items:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - productId
+ *                     - productName
+ *                     - price
+ *                     - quantity
+ *                   properties:
+ *                     productId:
+ *                       type: integer
+ *                       example: 1
+ *                     productName:
+ *                       type: string
+ *                       example: Mad Honey
+ *                     price:
+ *                       type: number
+ *                       format: float
+ *                       example: 1200
+ *                     quantity:
+ *                       type: integer
+ *                       example: 2
+ *     responses:
+ *       200:
+ *         description: Order updated successfully
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Order updated successfully
+ *       404:
+ *         description: Order not found
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Order not found
+ *       500:
+ *         description: Error updating order
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Error updating order
+ */
+router.put("/api/orders/:id", updateOrderController.updateOrder);
 
 /**
  * @swagger

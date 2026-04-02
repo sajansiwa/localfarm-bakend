@@ -5,9 +5,10 @@ const updateBlogs = async (req, res) => {
 
   try {
     const { id } = req.params;
-    const { title, slug, introduction, photos } = req.body;
+    const blogId = parseInt(id, 10);
+    const { title, slug, introduction } = req.body;
 
-    const blog = await db.Blog.findByPk(id);
+    const blog = await db.Blog.findByPk(blogId);
     if (!blog) {
       await transaction.rollback();
       return res.status(404).json({ message: "Blog not found" });
@@ -16,31 +17,39 @@ const updateBlogs = async (req, res) => {
     // Update blog
     await db.Blog.update(
       { title, slug, introduction },
-      { where: { id }, transaction },
+      { where: { id: blogId }, transaction },
     );
 
     // Replace images (simple approach)
     // if new photos uploaded
+    // console.log("id:", req.params);
+    // console.log("updatebody:", req.body);
+    // console.log("updatefiles:", req.files);
     if (req.files && req.files.length > 0) {
-      // delete old photos
       await db.BlogImage.destroy({
-        where: { blogId: id },
+        where: { blogId: blogId },
+        transaction,
       });
 
       const photos = req.files.map((file) => ({
-        blogId: id,
-        image_path: "uploads/products/" + file.filename,
+        blogId: blogId,
+        imagePath: "uploads/blogImages/" + file.filename,
       }));
 
-      await db.BlogImage.bulkCreate(photos);
+      await db.BlogImage.bulkCreate(photos, { transaction });
+      // ← and here
     }
-    await transaction.commit();
 
-    const updatedBlog = await db.Blog.findByPk(id, {
+    const updatedBlog = await db.Blog.findByPk(blogId, {
       include: [{ model: db.BlogImage, as: "photos" }],
     });
 
-    res.status(200).json(updatedBlog);
+    await transaction.commit();
+
+    res.status(200).json({
+      message: "Blog updated successfully",
+      blog: updatedBlog,
+    });
   } catch (err) {
     await transaction.rollback();
     console.error(err);

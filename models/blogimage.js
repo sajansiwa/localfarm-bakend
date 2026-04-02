@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   BlogImage.init(
     {
-      BlogId: DataTypes.INTEGER,
+      blogId: DataTypes.INTEGER,
       imagePath: DataTypes.STRING,
     },
     {

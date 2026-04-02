@@ -4,6 +4,7 @@ const getLatestBlogs = require("../controllers/getLatestBlogs");
 const getProductByCategory = require("../controllers/getBlogsByCategory");
 const getAllBlogs = require("../controllers/getAllBlogs");
 const updateBlogs = require("../controllers/updateBlog");
+const createBlogs = require("../controllers/createBlogs");
 const upload = require("../middlewares/upload");
 
 /**
@@ -92,6 +93,56 @@ router.put(
   },
   upload.array("photos"),
   updateBlogs,
+);
+
+/**
+ * @swagger
+ * /api/blogs:
+ *   post:
+ *     summary: Create a new blog
+ *     description: Creates a new blog with the provided details and images.
+ *     tags:
+ *       - Blogs
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: new blog title
+ *               slug:
+ *                 type: string
+ *                 example: new-blog-slug
+ *               introduction:
+ *                 type: string
+ *                 example: new blog introduction
+ *               content:
+ *                 type: string
+ *                 example: new blog content
+ *               photos:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *     responses:
+ *       200:
+ *         description: Blog created successfully
+ *       404:
+ *         description: Blog not found
+ *       500:
+ *         description: Server error
+ */
+router.post(
+  "/api/blogs",
+  (req, res, next) => {
+    req.uploadFolder = "uploads/blogImages/";
+    next();
+  },
+  upload.array("photos"),
+  createBlogs,
 );
 
 /**
