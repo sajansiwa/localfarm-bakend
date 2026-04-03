@@ -18,6 +18,11 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        categoryName: "Pollen",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
         categoryName: "Tea",
         createdAt: new Date(),
         updatedAt: new Date(),
