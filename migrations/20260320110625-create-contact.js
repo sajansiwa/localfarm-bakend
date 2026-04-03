@@ -18,6 +18,10 @@ module.exports = {
       message: {
         type: Sequelize.STRING
       },
+      followUp: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

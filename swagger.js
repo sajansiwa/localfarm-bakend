@@ -30,6 +30,10 @@ const options = {
         name: "Events",
         description: "Event management APIs",
       },
+      {
+        name: "Contact",
+        description: "Contact message management APIs",
+      },
     ],
     servers: [
       {
