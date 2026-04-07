@@ -11,7 +11,7 @@ const updateFollowUp = require("../controllers/updateFollowUP");
  *     summary: Create a new contact message
  *     description: Allows a user to submit a contact form message.
  *     tags:
- *       - contact
+ *       - Contact
  *     requestBody:
  *       required: true
  *       content:
@@ -64,7 +64,7 @@ router.post("/api/contact", contactController.createMessage);
  *     summary: Get all contact messages
  *     description: Retrieve a list of all contact messages
  *     tags:
- *       - contact
+ *       - Contact
  *     responses:
  *       200:
  *         description: List of blogs
@@ -80,7 +80,7 @@ router.get("/api/contact", constactController.getMessages);
  *     summary: Update follow-up status of a message
  *     description: Allows admin to mark a contact message as followed up or not.
  *     tags:
- *       - contact
+ *       - Contact
  *     parameters:
  *       - in: path
  *         name: id

@@ -34,6 +34,10 @@ const options = {
         name: "Contact",
         description: "Contact message management APIs",
       },
+      {
+        name: "Product Categories",
+        description: "Product category management APIs",
+      },
     ],
     servers: [
       {

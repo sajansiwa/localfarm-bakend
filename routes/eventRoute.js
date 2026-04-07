@@ -220,7 +220,7 @@ router.post("/api/events", async (req, res) => {
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             required:
@@ -257,6 +257,7 @@ router.put("/api/events/:id", async (req, res) => {
   const transaction = await db.sequelize.transaction();
 
   try {
+    console.log("Request body:", req.body);
     const { id } = req.params;
     const { eventTitle, eventDescription, date, isUpcoming, image } = req.body;
 
