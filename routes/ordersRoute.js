@@ -89,9 +89,9 @@ router.post("/api/orders", orderController.createOrder);
 /**
  * @swagger
  * /api/orders/{id}:
- *   put:
- *     summary: Update an existing order
- *     description: Updates order details along with its items. Existing items are deleted and replaced with new ones.
+ *   patch:
+ *     summary: Update order status
+ *     description: Allows updating the status of an existing order.
  *     tags:
  *       - Orders
  *     parameters:
@@ -109,49 +109,11 @@ router.post("/api/orders", orderController.createOrder);
  *           schema:
  *             type: object
  *             required:
- *               - customerName
- *               - customerPhone
- *               - customerAddress
- *               - items
+ *               - status
  *             properties:
- *               customerName:
- *                 type: string
- *                 example: John Doe
- *               customerPhone:
- *                 type: string
- *                 example: 9800000000
- *               customerEmail:
- *                 type: string
- *                 example: john@example.com
- *               customerAddress:
- *                 type: string
- *                 example: Kathmandu
  *               status:
  *                 type: string
  *                 example: pending
- *               items:
- *                 type: array
- *                 items:
- *                   type: object
- *                   required:
- *                     - productId
- *                     - productName
- *                     - price
- *                     - quantity
- *                   properties:
- *                     productId:
- *                       type: integer
- *                       example: 1
- *                     productName:
- *                       type: string
- *                       example: Mad Honey
- *                     price:
- *                       type: number
- *                       format: float
- *                       example: 1200
- *                     quantity:
- *                       type: integer
- *                       example: 2
  *     responses:
  *       200:
  *         description: Order updated successfully
@@ -172,7 +134,7 @@ router.post("/api/orders", orderController.createOrder);
  *             example:
  *               error: Error updating order
  */
-router.put("/api/orders/:id", updateOrderController.updateOrder);
+router.patch("/api/orders/:id", updateOrderController.updateOrder);
 
 /**
  * @swagger

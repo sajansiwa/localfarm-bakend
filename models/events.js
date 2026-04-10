@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       eventTitle: DataTypes.STRING,
       eventDescription: DataTypes.TEXT,
-      isupcoming: {
+      isUpcoming: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },

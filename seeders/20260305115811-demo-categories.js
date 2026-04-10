@@ -23,12 +23,12 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        categoryName: "Tea",
+        categoryName: "Pickles",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        categoryName: "Pickles",
+        categoryName: "Dairy",
         createdAt: new Date(),
         updatedAt: new Date(),
       },

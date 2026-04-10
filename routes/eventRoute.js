@@ -242,9 +242,11 @@ router.post("/api/events", async (req, res) => {
  *               isUpcoming:
  *                 type: boolean
  *                 example: true
- *               image:
- *                 type: string
- *                 example: uploads/events/coffee1.jpg
+ *               Photos:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   example: uploads/events/coffee1.jpg
  *     responses:
  *       200:
  *         description: Event updated successfully
@@ -259,7 +261,7 @@ router.put("/api/events/:id", async (req, res) => {
   try {
     console.log("Request body:", req.body);
     const { id } = req.params;
-    const { eventTitle, eventDescription, date, isUpcoming, image } = req.body;
+    const { eventTitle, eventDescription, date, isUpcoming, Photos } = req.body;
 
     // Check if event exists
     const event = await db.Event.findByPk(id);
@@ -271,10 +273,10 @@ router.put("/api/events/:id", async (req, res) => {
     // Update Event
     await db.Event.update(
       {
-        eventTitle,
-        eventDescription,
-        date,
-        isUpcoming,
+        eventTitle: eventTitle,
+        eventDescription: eventDescription,
+        date: date,
+        isUpcoming: isUpcoming,
       },
       {
         where: { id },
@@ -285,7 +287,7 @@ router.put("/api/events/:id", async (req, res) => {
     // Update Photo
     await db.EventPhoto.update(
       {
-        imagePath: image,
+        imagePath: Photos[0],
       },
       {
         where: { eventId: id },
@@ -294,6 +296,8 @@ router.put("/api/events/:id", async (req, res) => {
     );
 
     await transaction.commit();
+
+    console.log(await db.Event.findByPk(id));
 
     res.status(200).json({
       message: "Event updated successfully",

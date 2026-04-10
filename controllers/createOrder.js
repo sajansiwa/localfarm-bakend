@@ -29,7 +29,7 @@ exports.createOrder = async (req, res) => {
         totalPrice,
         orderStatus: "pending",
       },
-      { transaction }
+      { transaction },
     );
 
     // Create OrderDetails
@@ -46,13 +46,15 @@ exports.createOrder = async (req, res) => {
 
     await transaction.commit();
 
+    console.log("Order created successfully with ID:", order);
+
     res.status(201).json({
       message: "Order created successfully",
       orderId: order.id,
     });
   } catch (error) {
     await transaction.rollback();
-
+    console.error(error);
     res.status(500).json({
       message: "Failed to create order",
       error: error.message,
