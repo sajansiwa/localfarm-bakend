@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const { where } = require("sequelize");
+const upload = require("../middlewares/upload");
 
 /**
  * @swagger
@@ -255,59 +256,62 @@ router.post("/api/events", async (req, res) => {
  *       500:
  *         description: Server error
  */
-router.put("/api/events/:id", async (req, res) => {
-  const transaction = await db.sequelize.transaction();
+router.put(
+  "/api/events/:id",
+  (req, res, next) => {
+    req.uploadFolder = "uploads/events/";
+    next();
+  },
+  upload.array("Photos", 5),
+  async (req, res) => {
+    const transaction = await db.sequelize.transaction();
 
-  try {
-    console.log("Request body:", req.body);
-    const { id } = req.params;
-    const { eventTitle, eventDescription, date, isUpcoming, Photos } = req.body;
+    try {
+      console.log("Request body:", req.body);
+      const { id } = req.params;
+      const { eventTitle, eventDescription, date, isUpcoming, Photos } =
+        req.body;
 
-    // Check if event exists
-    const event = await db.Event.findByPk(id);
-    if (!event) {
+      // Check if event exists
+      const event = await db.Event.findByPk(id);
+      if (!event) {
+        await transaction.rollback();
+        return res.status(404).json({ message: "Event not found" });
+      }
+
+      // Update Event
+      await db.Event.update(
+        { eventTitle, eventDescription, date, isUpcoming },
+        { where: { id }, transaction },
+      );
+
+      // Update Photos — only if new files were actually uploaded
+      if (req.files && req.files.length > 0) {
+        await db.EventPhoto.destroy({ where: { eventId: id }, transaction });
+
+        await db.EventPhoto.bulkCreate(
+          req.files.map((file) => ({
+            eventId: id,
+            imagePath: file.path.replace(/\\/g, "/"),
+          })),
+          { transaction },
+        );
+      }
+
+      await transaction.commit();
+
+      console.log(await db.Event.findByPk(id));
+
+      res.status(200).json({
+        message: "Event updated successfully",
+      });
+    } catch (error) {
       await transaction.rollback();
-      return res.status(404).json({ message: "Event not found" });
+
+      console.error(error);
+      res.status(500).json({ error: "Error updating event" });
     }
-
-    // Update Event
-    await db.Event.update(
-      {
-        eventTitle: eventTitle,
-        eventDescription: eventDescription,
-        date: date,
-        isUpcoming: isUpcoming,
-      },
-      {
-        where: { id },
-        transaction,
-      },
-    );
-
-    // Update Photo
-    await db.EventPhoto.update(
-      {
-        imagePath: Photos[0],
-      },
-      {
-        where: { eventId: id },
-        transaction,
-      },
-    );
-
-    await transaction.commit();
-
-    console.log(await db.Event.findByPk(id));
-
-    res.status(200).json({
-      message: "Event updated successfully",
-    });
-  } catch (error) {
-    await transaction.rollback();
-
-    console.error(error);
-    res.status(500).json({ error: "Error updating event" });
-  }
-});
+  },
+);
 
 module.exports = router;

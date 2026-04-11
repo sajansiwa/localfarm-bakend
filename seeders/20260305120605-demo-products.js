@@ -82,7 +82,7 @@ module.exports = {
         quantity: 200,
         price: 1200,
         description:
-          "Local Farm’s Timur ko Chopis a signature Himalayan spice blend. Combining the citrusy, numbing zing of wild Timur pepper with roasted chilies, it adds a bold, authentic flavor to any dish. Experience this pure, preservative-free \"taste of home\" in every bite.",
+          'Local Farm’s Timur ko Chopis a signature Himalayan spice blend. Combining the citrusy, numbing zing of wild Timur pepper with roasted chilies, it adds a bold, authentic flavor to any dish. Experience this pure, preservative-free "taste of home" in every bite.',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
