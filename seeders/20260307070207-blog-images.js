@@ -13,7 +13,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        blogId: 1,
+        blogId: 2,
         imagePath: "uploads/blogImages/madhoney.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),

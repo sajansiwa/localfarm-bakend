@@ -163,45 +163,57 @@ router.get("/api/events/:id", async (req, res) => {
  *       500:
  *         description: Error creating event
  */
-router.post("/api/events", async (req, res) => {
-  const transaction = await db.sequelize.transaction();
+router.post(
+  "/api/events",
+  (req, res, next) => {
+    req.uploadFolder = "uploads/events/";
+    next();
+  },
+  upload.array("Photos", 5),
+  async (req, res) => {
+    const transaction = await db.sequelize.transaction();
 
-  try {
-    const { eventTitle, eventDescription, date, isUpcoming, image } = req.body;
+    try {
+      console.log("Request body:", req.body);
+      const { eventTitle, eventDescription, date, isUpcoming, image } =
+        req.body;
 
-    // Create Event
-    const newEvent = await db.Event.create(
-      {
-        eventTitle,
-        eventDescription,
-        date,
-        isUpcoming,
-      },
-      { transaction },
-    );
+      // Create Event
+      const newEvent = await db.Event.create(
+        {
+          eventTitle,
+          eventDescription,
+          date,
+          isUpcoming,
+        },
+        { transaction },
+      );
 
-    // Create Event Photo
-    const eventPhoto = await db.EventPhoto.create(
-      {
-        eventId: newEvent.id,
-        imagePath: image,
-      },
-      { transaction },
-    );
+      // Create Event Photo
+      if (req.files && req.files.length > 0) {
 
-    await transaction.commit();
+        await db.EventPhoto.bulkCreate(
+          req.files.map((file) => ({
+            imagePath: file.path.replace(/\\/g, "/"),
+          })),
+          { transaction },
+        );
+      }
 
-    res.status(201).json({
-      event: newEvent,
-      photo: eventPhoto,
-    });
-  } catch (error) {
-    await transaction.rollback();
+      await transaction.commit();
 
-    console.error(error);
-    res.status(500).json({ error: "Error creating event" });
-  }
-});
+      res.status(201).json({
+        event: newEvent,
+        photo: eventPhoto,
+      });
+    } catch (error) {
+      await transaction.rollback();
+
+      console.error(error);
+      res.status(500).json({ error: "Error creating event" });
+    }
+  },
+);
 
 /**
  * @swagger
