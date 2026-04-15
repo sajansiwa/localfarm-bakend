@@ -191,9 +191,9 @@ router.post(
 
       // Create Event Photo
       if (req.files && req.files.length > 0) {
-
         await db.EventPhoto.bulkCreate(
           req.files.map((file) => ({
+            eventId: newEvent.id,
             imagePath: file.path.replace(/\\/g, "/"),
           })),
           { transaction },
@@ -204,7 +204,6 @@ router.post(
 
       res.status(201).json({
         event: newEvent,
-        photo: eventPhoto,
       });
     } catch (error) {
       await transaction.rollback();
