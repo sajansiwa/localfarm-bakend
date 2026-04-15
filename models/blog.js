@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Blog.belongsTo(models.ProductCategory, {
+        foreignKey: "categoryId",
+        as: "category",
+      });
+
       Blog.hasMany(models.BlogImage, {
         foreignKey: "BlogId",
         as: "photos",
@@ -16,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Blog.init(
     {
+      categoryId: { type: DataTypes.INTEGER, allowNull: false },
       title: DataTypes.STRING,
       slug: DataTypes.STRING,
       introduction: DataTypes.TEXT,

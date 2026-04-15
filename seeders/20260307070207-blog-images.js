@@ -8,19 +8,13 @@ module.exports = {
     await queryInterface.bulkInsert("BlogImages", [
       {
         blogId: 1,
-        imagePath: "uploads/blogImages/blogimage1.png",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        blogId: 1,
-        imagePath: "uploads/blogImages/blogimage2.png",
+        imagePath: "uploads/blogImages/beepollen.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         blogId: 2,
-        imagePath: "uploads/blogImages/blogimage3.png",
+        imagePath: "uploads/blogImages/madhoney.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
