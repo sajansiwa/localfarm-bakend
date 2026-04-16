@@ -2,6 +2,7 @@ const db = require("../models");
 
 const getBlogsByProductCategory = async (req, res) => {
   try {
+    console.log("Fetching blogs for category ID:", req.params.id);
     const blogs = await db.Blog.findAll({
       where: { categoryId: req.params.id },
       include: [
@@ -11,7 +12,7 @@ const getBlogsByProductCategory = async (req, res) => {
           attributes: ["imagePath"],
         },
         {
-          model: db.ProductCategories,
+          model: db.ProductCategory,
           as: "category",
           attributes: ["categoryName"],
         },

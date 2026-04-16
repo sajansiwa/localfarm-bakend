@@ -172,7 +172,7 @@ router.get("/api/blogs/:slug", getBlogsBySlug);
 
 /**
  * @swagger
- * /api/blogs/{id}:
+ * /api/blogs/category/{id}:
  *   get:
  *     summary: Get blog by product category
  *     description: Retrieve a single blog using its ID
@@ -192,6 +192,6 @@ router.get("/api/blogs/:slug", getBlogsBySlug);
  *       404:
  *         description: Blog not found
  */
-router.get("/api/blogs/:id", getBlogsByProductCategory);
+router.get("/api/blogs/category/:id", getBlogsByProductCategory);
 
 module.exports = router;
