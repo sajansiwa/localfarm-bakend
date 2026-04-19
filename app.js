@@ -23,7 +23,7 @@ app.use(
 );
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+scm-history-item:c%3A%5CUsers%5CLipsa%5CDesktop%5Cbackend-2%5Clocalfarm-bakend?%7B%22repositoryId%22%3A%22scm0%22%2C%22historyItemId%22%3A%224fc4b22ec06be6b84cf40d51526e0bff8cc6db0c%22%2C%22historyItemParentId%22%3A%228bacd25c99131a739c4e8596607e1f92c5ee04a0%22%2C%22historyItemDisplayId%22%3A%224fc4b22%22%7Dapp.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
