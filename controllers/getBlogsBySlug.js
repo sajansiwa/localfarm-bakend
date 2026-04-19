@@ -1,6 +1,6 @@
 const db = require("../models");
 
-const getProductByCategory = async (req, res) => {
+const getBlogsBySlug = async (req, res) => {
   try {
     const blog = await db.Blog.findOne({
       where: { slug: req.params.slug },
@@ -26,4 +26,4 @@ const getProductByCategory = async (req, res) => {
   }
 };
 
-module.exports = getProductByCategory;
+module.exports = getBlogsBySlug;

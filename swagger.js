@@ -38,6 +38,10 @@ const options = {
         name: "Product Categories",
         description: "Product category management APIs",
       },
+      {
+        name: "Staff",
+        description: "Staff management APIs",
+      },
     ],
     servers: [
       {

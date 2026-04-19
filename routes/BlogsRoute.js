@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const getLatestBlogs = require("../controllers/getLatestBlogs");
-const getProductByCategory = require("../controllers/getBlogsByCategory");
+const getBlogsBySlug = require("../controllers/getBlogsBySlug");
 const getAllBlogs = require("../controllers/getAllBlogs");
 const updateBlogs = require("../controllers/updateBlog");
 const createBlogs = require("../controllers/createBlogs");
+const getBlogsByProductCategory = require("../controllers/getBlogsByProductCategory");
 const upload = require("../middlewares/upload");
 
 /**
@@ -167,6 +168,30 @@ router.post(
  *       404:
  *         description: Blog not found
  */
-router.get("/api/blogs/:slug", getProductByCategory);
+router.get("/api/blogs/:slug", getBlogsBySlug);
+
+/**
+ * @swagger
+ * /api/blogs/category/{id}:
+ *   get:
+ *     summary: Get blog by product category
+ *     description: Retrieve a single blog using its ID
+ *     tags:
+ *       - Blogs
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: category ID
+ *         schema:
+ *           type: string
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: Blog found
+ *       404:
+ *         description: Blog not found
+ */
+router.get("/api/blogs/category/:id", getBlogsByProductCategory);
 
 module.exports = router;

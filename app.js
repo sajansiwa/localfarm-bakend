@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-
 const catRoutes = require("./routes/productCategoryRoute");
 const adminRoutes = require("./routes/adminRoute");
 const testRoutes = require("./routes/testRoute");
@@ -11,6 +10,7 @@ const orderRoutes = require("./routes/ordersRoute");
 const eventRoutes = require("./routes/eventRoute");
 const contactRoutes = require("./routes/contactRoute");
 const { swaggerUi, swaggerSpec } = require("./swagger");
+const staffRoute = require("./routes/staffRoute");
 
 const app = express();
 
@@ -43,6 +43,7 @@ app.use(orderRoutes);
 app.use(eventRoutes);
 app.use(contactRoutes);
 app.use(catRoutes);
+app.use(staffRoute);
 
 // 404 handler
 app.use((req, res) => {
