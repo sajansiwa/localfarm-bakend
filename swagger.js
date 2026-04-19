@@ -42,6 +42,10 @@ const options = {
         name: "Staff",
         description: "Staff management APIs",
       },
+      {
+        name: "FAQs",
+        description: "FAQ management APIs",
+      },
     ],
     servers: [
       {

@@ -9,6 +9,7 @@ const blogRoutes = require("./routes/BlogsRoute");
 const orderRoutes = require("./routes/ordersRoute");
 const eventRoutes = require("./routes/eventRoute");
 const contactRoutes = require("./routes/contactRoute");
+const FaqRoutes = require("./routes/faqRoutes");
 const { swaggerUi, swaggerSpec } = require("./swagger");
 const staffRoute = require("./routes/staffRoute");
 
@@ -44,6 +45,7 @@ app.use(eventRoutes);
 app.use(contactRoutes);
 app.use(catRoutes);
 app.use(staffRoute);
+app.use(FaqRoutes);
 
 // 404 handler
 app.use((req, res) => {
