@@ -6,6 +6,7 @@ const getThreeProducts = require("../controllers/getThreeProducts");
 const getProductById = require("../controllers/getProductById");
 const getProductsByCategory = require("../controllers/getProductByCategory");
 const getThreeProductsByCategory = require("../controllers/getThreeProductsByCategory");
+const authMiddleware = require("../middlewares/authMiddleWare");
 const upload = require("../middlewares/upload");
 
 /**
@@ -168,6 +169,7 @@ router.get(
  */
 router.post(
   "/api/products",
+  authMiddleware,
   upload.array("photos", 5), // max 5 images
   async (req, res) => {
     try {
@@ -262,6 +264,7 @@ router.post(
  */
 router.put(
   "/api/products/:id",
+  authMiddleware,
   (req, res, next) => {
     req.uploadFolder = "uploads/products/";
     next();
@@ -376,7 +379,7 @@ router.put(
  *                   type: string
  *                   example: "Error deleting product"
  */
-router.delete("/api/products/:id", async (req, res) => {
+router.delete("/api/products/:id", authMiddleware, async (req, res) => {
   const transaction = await db.sequelize.transaction();
 
   try {

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
+const authMiddleware = require("../middlewares/authMiddleWare");
 
 /**
  * @swagger
@@ -136,47 +137,53 @@ router.get("/api/product-categories", async (req, res) => {
  *                   type: string
  *                   example: "An error occurred while updating product category"
  */
-router.patch("/api/product-categories/:id", async (req, res) => {
-  const { id } = req.params;
-  const { categoryName } = req.body;
+router.patch(
+  "/api/product-categories/:id",
+  authMiddleware,
+  async (req, res) => {
+    const { id } = req.params;
+    const { categoryName } = req.body;
 
-  if (
-    !categoryName ||
-    typeof categoryName !== "string" ||
-    !categoryName.trim()
-  ) {
-    return res.status(400).json({ message: "categoryName is required" });
-  }
-
-  const trimmed = categoryName.trim();
-
-  try {
-    const category = await db.ProductCategory.findByPk(id);
-    if (!category) {
-      return res.status(404).json({ message: "Product category not found" });
+    if (
+      !categoryName ||
+      typeof categoryName !== "string" ||
+      !categoryName.trim()
+    ) {
+      return res.status(400).json({ message: "categoryName is required" });
     }
 
-    const duplicate = await db.ProductCategory.findOne({
-      where: { categoryName: trimmed },
-    });
-    if (duplicate && duplicate.id !== parseInt(id)) {
-      return res.status(409).json({ message: "Category name already exists" });
+    const trimmed = categoryName.trim();
+
+    try {
+      const category = await db.ProductCategory.findByPk(id);
+      if (!category) {
+        return res.status(404).json({ message: "Product category not found" });
+      }
+
+      const duplicate = await db.ProductCategory.findOne({
+        where: { categoryName: trimmed },
+      });
+      if (duplicate && duplicate.id !== parseInt(id)) {
+        return res
+          .status(409)
+          .json({ message: "Category name already exists" });
+      }
+
+      category.categoryName = trimmed;
+      await category.save();
+
+      res.status(200).json({
+        message: "Product category updated successfully",
+        category: category.toJSON(),
+      });
+    } catch (error) {
+      console.error("Error updating product category:", error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while updating product category" });
     }
-
-    category.categoryName = trimmed;
-    await category.save();
-
-    res.status(200).json({
-      message: "Product category updated successfully",
-      category: category.toJSON(),
-    });
-  } catch (error) {
-    console.error("Error updating product category:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while updating product category" });
-  }
-});
+  },
+);
 
 /**
  * @swagger
@@ -229,7 +236,7 @@ router.patch("/api/product-categories/:id", async (req, res) => {
  *                   type: string
  *                   example: "An error occurred while creating product category"
  */
-router.post("/api/product-categories", async (req, res) => {
+router.post("/api/product-categories", authMiddleware, async (req, res) => {
   const transaction = await db.sequelize.transaction();
   try {
     const { categoryName } = req.body;

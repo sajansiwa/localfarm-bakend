@@ -6,6 +6,7 @@ const getAllBlogs = require("../controllers/getAllBlogs");
 const updateBlogs = require("../controllers/updateBlog");
 const createBlogs = require("../controllers/createBlogs");
 const getBlogsByProductCategory = require("../controllers/getBlogsByProductCategory");
+const authMiddleware = require("../middlewares/authMiddleware");
 const upload = require("../middlewares/upload");
 
 /**
@@ -88,6 +89,7 @@ router.get("/api/blogs", getAllBlogs);
  */
 router.put(
   "/api/blogs/:id",
+  authMiddleware,
   (req, res, next) => {
     req.uploadFolder = "uploads/blogImages/";
     next();
@@ -138,6 +140,7 @@ router.put(
  */
 router.post(
   "/api/blogs",
+  authMiddleware,
   (req, res, next) => {
     req.uploadFolder = "uploads/blogImages/";
     next();
