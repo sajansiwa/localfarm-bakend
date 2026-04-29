@@ -56,7 +56,7 @@ const authMiddleware = require("../middlewares/authMiddleWare");
  *             example:
  *               error: Error creating message
  */
-router.post("/api/contact", authMiddleware, contactController.createMessage);
+router.post("/api/contact", contactController.createMessage);
 
 /**
  * @swagger

@@ -85,7 +85,7 @@ const authMiddleware = require("../middlewares/authMiddleWare");
  *       500:
  *         description: Failed to create order
  */
-router.post("/api/orders",authMiddleware, orderController.createOrder);
+router.post("/api/orders", orderController.createOrder);
 
 /**
  * @swagger
