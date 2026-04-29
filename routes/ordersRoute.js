@@ -4,6 +4,7 @@ const orderController = require("../controllers/createOrder");
 const getOrderController = require("../controllers/getOrder");
 const getOrdersByIdController = require("../controllers/getOrdersById");
 const updateOrderController = require("../controllers/updateOrder");
+const authMiddleware = require("../middlewares/authMiddleWare");
 
 /**
  * @swagger
@@ -84,7 +85,7 @@ const updateOrderController = require("../controllers/updateOrder");
  *       500:
  *         description: Failed to create order
  */
-router.post("/api/orders", orderController.createOrder);
+router.post("/api/orders",authMiddleware, orderController.createOrder);
 
 /**
  * @swagger

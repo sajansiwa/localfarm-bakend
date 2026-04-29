@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../models");
 const { where } = require("sequelize");
 const upload = require("../middlewares/upload");
+const authMiddleware = require("../middlewares/authMiddleWare");
 
 /**
  * @swagger
@@ -165,6 +166,7 @@ router.get("/api/events/:id", async (req, res) => {
  */
 router.post(
   "/api/events",
+  authMiddleware,
   (req, res, next) => {
     req.uploadFolder = "uploads/events/";
     next();
@@ -269,6 +271,8 @@ router.post(
  */
 router.put(
   "/api/events/:id",
+
+  authMiddleware,
   (req, res, next) => {
     req.uploadFolder = "uploads/events/";
     next();

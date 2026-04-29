@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../models");
 const authMiddleware = require("../middlewares/authMiddleWare");
 const upload = require("../middlewares/upload");
+const authMiddleWare = require("../middlewares/authMiddleWare");
 
 /**
  * @swagger

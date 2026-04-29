@@ -3,6 +3,7 @@ const router = express.Router();
 const contactController = require("../controllers/createMessage");
 const constactController = require("../controllers/getMessages");
 const updateFollowUp = require("../controllers/updateFollowUP");
+const authMiddleware = require("../middlewares/authMiddleWare");
 
 /**
  * @swagger
@@ -55,7 +56,7 @@ const updateFollowUp = require("../controllers/updateFollowUP");
  *             example:
  *               error: Error creating message
  */
-router.post("/api/contact", contactController.createMessage);
+router.post("/api/contact", authMiddleware, contactController.createMessage);
 
 /**
  * @swagger
@@ -71,7 +72,7 @@ router.post("/api/contact", contactController.createMessage);
  *       500:
  *         description: Server error
  */
-router.get("/api/contact", constactController.getMessages);
+router.get("/api/contact", authMiddleware, constactController.getMessages);
 
 /**
  * @swagger

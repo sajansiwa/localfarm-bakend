@@ -3,8 +3,6 @@ const router = express.Router();
 const db = require("../models");
 const verifyToken = require("../middlewares/authMiddleWare");
 
-
-
 /**
  * @swagger
  * /api/faqs:
@@ -32,7 +30,6 @@ router.get("/api/faqs", async (req, res) => {
     res.status(500).json({ error: "Error fetching FAQs" });
   }
 });
-
 
 /**
  * @swagger
@@ -73,7 +70,6 @@ router.get("/api/faqs/:id", async (req, res) => {
     res.status(500).json({ error: "Error fetching FAQ" });
   }
 });
-
 
 /**
  * @swagger
@@ -118,7 +114,9 @@ router.post("/api/faqs", verifyToken, async (req, res) => {
     const { question, answer } = req.body;
 
     if (!question || !answer) {
-      return res.status(400).json({ message: "Question and answer are required" });
+      return res
+        .status(400)
+        .json({ message: "Question and answer are required" });
     }
 
     const faq = await db.Faq.create({ question, answer });
@@ -129,7 +127,6 @@ router.post("/api/faqs", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Error creating FAQ" });
   }
 });
-
 
 /**
  * @swagger
@@ -196,7 +193,6 @@ router.put("/api/faqs/:id", verifyToken, async (req, res) => {
   }
 });
 
-
 /**
  * @swagger
  * /api/faqs/{id}:
@@ -238,6 +234,5 @@ router.delete("/api/faqs/:id", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Error deleting FAQ" });
   }
 });
-
 
 module.exports = router;
