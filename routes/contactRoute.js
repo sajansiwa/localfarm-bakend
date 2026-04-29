@@ -72,7 +72,7 @@ router.post("/api/contact", contactController.createMessage);
  *       500:
  *         description: Server error
  */
-router.get("/api/contact", authMiddleware, constactController.getMessages);
+router.get("/api/contact",constactController.getMessages);
 
 /**
  * @swagger
@@ -128,6 +128,6 @@ router.get("/api/contact", authMiddleware, constactController.getMessages);
  *             example:
  *               error: Internal server error
  */
-router.patch("/api/contact/:id", updateFollowUp.updateFollowUp);
+router.patch("/api/contact/:id", authMiddleware, updateFollowUp.updateFollowUp);
 
 module.exports = router;
