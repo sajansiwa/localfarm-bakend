@@ -5,7 +5,14 @@ const getLatestBlogs = async (req, res) => {
     const blogs = await db.Blog.findAll({
       limit: 5,
       order: [["createdAt", "DESC"]],
-      attributes: ["id", "title", "slug", "introduction", "createdAt"],
+      attributes: [
+        "id",
+        "title",
+        "slug",
+        "introduction",
+        "createdAt",
+        "categoryId",
+      ],
       include: [
         {
           model: db.BlogImage,

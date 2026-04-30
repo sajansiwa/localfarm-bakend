@@ -4,6 +4,15 @@ const getBlogsBySlug = async (req, res) => {
   try {
     const blog = await db.Blog.findOne({
       where: { slug: req.params.slug },
+      attributes: [
+        "id",
+        "title",
+        "slug",
+        "introduction",
+        "content",
+        "createdAt",
+        "categoryId",
+      ],
       include: [
         {
           model: db.BlogImage,
