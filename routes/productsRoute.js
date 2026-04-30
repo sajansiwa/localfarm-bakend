@@ -189,11 +189,12 @@ router.post(
         description,
       });
 
+      console.log("Product photos",req.files);
       //  Save photos
       if (req.files && req.files.length > 0) {
         const photos = req.files.map((file) => ({
           productId: product.id,
-          image_path: "uploads/products/" + file.filename,
+          imagePath: "uploads/products/" + file.filename,
         }));
 
         await db.ProductPhoto.bulkCreate(photos);
