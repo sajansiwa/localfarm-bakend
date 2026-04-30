@@ -12,6 +12,7 @@ const getAllBlogs = async (req, res) => {
         "introduction",
         "content",
         "createdAt",
+        "categoryId",
       ],
       include: [
         {

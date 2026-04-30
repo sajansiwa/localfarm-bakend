@@ -170,13 +170,17 @@ router.get(
 router.post(
   "/api/products",
   authMiddleware,
+  (req, res, next) => {
+    req.uploadFolder = "uploads/products/";
+    next();
+  },
   upload.array("photos", 5), // max 5 images
   async (req, res) => {
     try {
       const { categoryId, productName, quantity, price, description } =
         req.body;
 
-      // 1️⃣ Create product
+      //  Create product
       const product = await db.Product.create({
         categoryId,
         productName,
@@ -185,7 +189,7 @@ router.post(
         description,
       });
 
-      // 2️⃣ Save photos
+      //  Save photos
       if (req.files && req.files.length > 0) {
         const photos = req.files.map((file) => ({
           productId: product.id,

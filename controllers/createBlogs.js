@@ -4,10 +4,10 @@ const createBlogs = async (req, res) => {
   const transaction = await db.sequelize.transaction();
 
   try {
-    const { title, slug, introduction, content } = req.body;
+    const { title, slug, introduction, content, categoryId } = req.body;
 
     const newBlog = await db.Blog.create(
-      { title, slug, introduction, content },
+      { title, slug, introduction, content, categoryId },
       { transaction },
     );
 
