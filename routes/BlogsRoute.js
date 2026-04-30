@@ -125,9 +125,9 @@ router.put(
  *               content:
  *                 type: string
  *                 example: new blog content
- *              categoryId:
- *                type: integer
- *                example: 1
+ *               categoryId:
+ *                 type: integer
+ *                 example: 1
  *               photos:
  *                 type: array
  *                 items:
