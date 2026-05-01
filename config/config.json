@@ -3,7 +3,16 @@
     "username": "root",
     "password": "",
     "database": "localfarm_db",
-    "host": "127.0.0.1",
+    "host": "localhost",
+    "port": 3306,
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "u873181503_localfarm",
+    "password": "6gT2mt!G5^/",
+    "database": "u873181503_localfarm",
+    "host": "uk-fast-web1944.main-hosting.eu",
+    "port": 3306,
     "dialect": "mysql"
   }
 }
