@@ -17,7 +17,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.ALLOWED_ORIGINS?.split(",") || "http://localhost:3000",
+    origin: process.env.ALLOWED_ORIGINS?.split(",") || [
+      "https://localfarmnepal.com",
+      "https://www.localfarmnepal.com",
+    ],
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),

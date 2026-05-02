@@ -6,7 +6,7 @@ const getAllBlogs = require("../controllers/getAllBlogs");
 const updateBlogs = require("../controllers/updateBlog");
 const createBlogs = require("../controllers/createBlogs");
 const getBlogsByProductCategory = require("../controllers/getBlogsByProductCategory");
-const authMiddleware = require("../middlewares/authMiddleware");
+const authMiddleware = require("../middlewares/authMiddleWare");
 const upload = require("../middlewares/upload");
 
 /**
