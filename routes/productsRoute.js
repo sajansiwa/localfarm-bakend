@@ -189,7 +189,7 @@ router.post(
         description,
       });
 
-      console.log("Product photos",req.files);
+      console.log("Product photos", req.files);
       //  Save photos
       if (req.files && req.files.length > 0) {
         const photos = req.files.map((file) => ({

@@ -72,7 +72,7 @@ router.post("/api/contact", contactController.createMessage);
  *       500:
  *         description: Server error
  */
-router.get("/api/contact",constactController.getMessages);
+router.get("/api/contact", constactController.getMessages);
 
 /**
  * @swagger
